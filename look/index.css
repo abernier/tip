@@ -1,0 +1,88 @@
+/**
+ *  .tip[(.tl|.tc|.tr|.rt|.rc|.rb|.br|.bc|.bl|.lb|.lc|.lt)]
+ *    .in
+ *      [.close-button]
+ *      [.hd]
+ *      .bd
+ *      [.ft]
+ *    [.stem]
+ */
+
+.tip {display:inline-block; position:absolute; max-width:35em; z-index:999;}
+
+.tip .in {
+    border:.2em solid; background-color:white; position:relative;
+    border-radius:.5em; box-shadow:0.2em 0.2em 0 rgba(0,0,0,.5);
+}
+
+.tip .close-button {
+    display:block; width:1.25em; height:1.25em; line-height:1.25em; position:absolute; right:0; top:0; background-color:black; color:white; opacity:.2; visibility:hidden; cursor:pointer; text-align:center;
+    -moz-border-radius:0 .2em 0 .2em;-webkit-border-radius:0 .2em 0 .2em;-ms-border-radius:0 .2em 0 .2em;border-radius:0 .2em 0 .2em;
+}
+.tip:hover .close-button {visibility:visible;}
+.tip .close-button:hover {opacity:1;}
+
+.tip .hd,
+.tip .ft {background-color:rgba(0,0,0,.25);}
+.tip .hd {text-align:center;}
+
+.tip .bd {padding:.5em;}
+
+/* Stem */
+
+.tip.tl .in,
+.tip.tc .in,
+.tip.tr .in {margin-top:.5em;}
+.tip.rt .in,
+.tip.rc .in,
+.tip.rb .in {margin-right:.5em;}
+.tip.bl .in,
+.tip.bc .in,
+.tip.br .in {margin-bottom:.5em;}
+.tip.lt .in,
+.tip.lc .in,
+.tip.lb .in {margin-left:.5em;}
+
+/** Arrow shape with borders */
+
+.tip .stem {display:inline-block; border:.5em solid transparent; position:absolute;}
+.tip.tl .stem,
+.tip.tc .stem,
+.tip.tr .stem {border-bottom-color:black;}
+.tip.rt .stem,
+.tip.rc .stem,
+.tip.rb .stem {border-left-color:black;}
+.tip.bl .stem,
+.tip.bc .stem,
+.tip.br .stem {border-top-color:black;}
+.tip.lt .stem,
+.tip.lc .stem,
+.tip.lb .stem {border-right-color:black;}
+
+/** Position */
+
+.tip.tl .stem,
+.tip.tc .stem,
+.tip.tr .stem {top:-.5em;}
+.tip.rt .stem,
+.tip.rc .stem,
+.tip.rb .stem {right:-.5em;}
+.tip.bl .stem,
+.tip.bc .stem,
+.tip.br .stem {bottom:-.5em;}
+.tip.lt .stem,
+.tip.lc .stem,
+.tip.lb .stem {left:-.5em;}
+
+.tip.tc .stem,
+.tip.bc .stem {left:50%; margin-left:-.5em;}
+.tip.tr .stem,
+.tip.br .stem {right:.5em;}
+.tip.rc .stem,
+.tip.lc .stem {top:50%; margin-top:-.5em;}
+.tip.rb .stem,
+.tip.lb .stem {bottom:.5em;}
+.tip.rt .stem,
+.tip.lt .stem {top:.5em;}
+.tip.tl .stem,
+.tip.bl .stem {left:.5em;}

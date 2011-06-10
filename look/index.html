@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>.tip</title>
+        <link rel="stylesheet" href="index.css">
+        <style>
+        html, body {height:100%;}
+        html {display:table; width:100%;}
+        body {display:table-cell; text-align:center; vertical-align:middle;}
+        body {font-size:16px;/* font-family:"Arial Black";*/ background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAAA3NCSVQICAjb4U/gAAAABlBMVEX////MzMw46qqDAAAACXBIWXMAAAsSAAALEgHS3X78AAAAIXRFWHRTb2Z0d2FyZQBNYWNyb21lZGlhIEZpcmV3b3JrcyAzLjDvaTHwAAAAFnRFWHRDcmVhdGlvbiBUaW1lADEwLzIyLzA0BdO4DAAAAA9JREFUeJxj+MAAgfwQCAAuAAP9krVt7wAAAABJRU5ErkJggg==);}
+        
+        /******************/
+        
+        label {cursor:pointer;}
+        header {position:fixed; top:0; left:0;right:0;}
+        header p {background-color:white; padding:.5em 0;}
+        
+        .tip {position:relative;}
+        </style>
+    </head>
+    <body>
+        <header>
+            <h1>.tip</h1>
+            <form>
+                <p><code>
+                    [ <label for="button-type"><var>&lt;position&gt;</var></label>
+                    <select id="tip-position" name="tip[position]">
+                        <option value="" selected></option>
+                        <option value="tl">.tl</option>
+                        <option value="tc">.tc</option>
+                        <option value="tr">.tr</option>
+                        <option value="rt">.rt</option>
+                        <option value="rc">.rc</option>
+                        <option value="rb">.rb</option>
+                        <option value="br">.br</option>
+                        <option value="bc">.bc</option>
+                        <option value="bl">.bl</option>
+                        <option value="lb">.lb</option>
+                        <option value="lc">.lc</option>
+                        <option value="lt">.lt</option>
+                    </select> ]?
+                </code></p>
+            </form>
+        </header>
+        
+        <div class="tip">
+            <div class="in">
+                <span class="close-button">x</span>
+                <div class="hd">title</div>
+                <div class="bd">
+                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
+                </div>
+                <div class="ft">foot</div>
+            </div>
+            <span class="stem"></span>
+        </div>
+        
+        <script src="../../vendor/jquery-1.5.min.js"></script>
+        <script>
+        (function ($) {
+            $('select').change(function () {
+                $('.tip').removeClass($('option', $(this)).map(function () {
+                    return $(this).attr('value');
+                }).get().join(' ')).addClass($(this).val());
+            });
+            $(':checkbox').change(function () {
+                $('.button').toggleClass($(this).val());
+            });
+        }(jQuery));
+        </script>
+    </body>
+</html>

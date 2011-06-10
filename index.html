@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>tip</title>
+        <link rel="stylesheet" href="look/index.css">
+        <style>
+        html, body {height:100%;}
+        html {display:table; width:100%;}
+        body {display:table-cell; text-align:center; vertical-align:middle;}
+        body {font-size:16px;/* font-family:"Arial Black";*/ background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAAA3NCSVQICAjb4U/gAAAABlBMVEX////MzMw46qqDAAAACXBIWXMAAAsSAAALEgHS3X78AAAAIXRFWHRTb2Z0d2FyZQBNYWNyb21lZGlhIEZpcmV3b3JrcyAzLjDvaTHwAAAAFnRFWHRDcmVhdGlvbiBUaW1lADEwLzIyLzA0BdO4DAAAAA9JREFUeJxj+MAAgfwQCAAuAAP9krVt7wAAAABJRU5ErkJggg==);}
+        
+        /******************/
+        
+        h1 {display:inline-block; position:relative;}
+        
+        #foo {position:absolute; top:200px; left:300px;}
+        #bar {position:absolute; top:300px; left:600px;}
+        
+        .tip strong {background-color:yellow; color:#333; border-radius:.25em; padding:.1em .2em;}
+        .tip .clue {font-style:italic;}
+        </style>
+    </head>
+    <body>
+        <h1 id="foo" title="Hi, I'm .tip()! Close-me to continue...">foo</h1>
+        <h1 id="bar">bar</h1>
+        <script src="vendor/jquery.min.js"></script>
+        <script src="vendor/jquery-ui.min.js"></script>
+        <script src="vendor/jquery.tmpl.min.js"></script>
+        <script src="feel/index.js"></script>
+        <script>
+        $('#foo').tip().one('tipafterclose', function (event) {
+            $(this).tip({
+                content: '<h1><samp>content</samp></h1><p>Even if my default is to display my <samp>title</samp> attribute, I can also display custom <abbr title="Hyper Text Markup Language">HTML</abbr> content, eg:</p><pre style="text-align:left; white-space:normal;"><code>$(\'#foo\').tip({<strong>content</strong>: \'&lt;h1&gt;&lt;samp&gt;content&lt;/samp&gt;&lt;/h1&gt;&lt;p&gt;Even if my default is to display my &lt;samp&gt;title&lt;/samp&gt; attribute, I can also display custom &lt;abbr title=&quot;Hyper Text Markup Language&quot;&gt;HTML&lt;/abbr&gt; content, eg:&lt;/p&gt;\'})</code></pre><p class="clue">Close-me to continue...</p>'
+            }).one('tipafterclose', function (event) {
+                $(this).tip({
+                    content: function (response) {
+                        $.get('data/ajax.html.php', response);
+                        return 'loading...';
+                    }
+                }).one('tipafterclose', function (event) {
+                    $(this).tip({
+                        content: function (response) {
+                            $.get('data/target.html.php', response);
+                            return 'loading...';
+                        },
+                        target: $('#bar')
+                    }).one('tipafterclose', function (event) {
+                        $(this).tip({
+                            content: function (response) {
+                                $.get('data/hook.html.php', response);
+                                return 'loading...';
+                            },
+                            hook: {
+                                target: 'bc',
+                                tip: 'tc'
+                            },
+                            stem: true
+                        }).one('tipafterclose', function (event) {
+                            $(this).tip({
+                                content: function (response) {
+                                    $.get('data/hook2.html.php', response);
+                                    return 'loading...';
+                                },
+                                hook: {
+                                    target: 'lc',
+                                    tip: 'rc'
+                                }
+                            });
+                        });
+                    });
+                });
+            });
+        });
+        </script>
+    </body>
+</html>
