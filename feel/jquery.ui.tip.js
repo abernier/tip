@@ -1,9 +1,9 @@
 (function ($) {
     //
     // $.ui.tip
-    // 
+    //
     // Tip widget
-    // 
+    //
     // @depends     jquery.js
     // @depends     jquery.ui.core.js
     // @depends     jquery.ui.widget.js
@@ -68,20 +68,20 @@
     //
     //                              Default: false
     //
-    //                          <openOn>: 
+    //                          <openOn>:
     //
     //                              '<eventA> <eventB> ...' | ['<eventA>', '<eventB>', ...]
     //
     //                              Default: ''
     //
-    //                          <closeOn>: 
+    //                          <closeOn>:
     //
     //                              '<eventA> <eventB> ...' | ['<eventA>', '<eventB>', ...]
     //
     //                              Default: ''
     //
     //                          <addClass>:
-    //                              
+    //
     //                              'customA customB ...'
     //
     //                              Default: ''
@@ -112,35 +112,35 @@
         },
         _create: function () {
             //console.log('_creating...', 'this.options=', this.options);
-            
+
             var events;
-            
+
             this.bindings = $();
-            
+
             //
             // Create the tip's markup
             //
-            
+
             this.$tip = this._tip();
-            
+
             // Cache some remarkable elements
             this.$title         = this.$tip.find('.hd');
             this.$closeButton   = this.$tip.find('.close-button');
             this.$content       = this.$tip.find('.bd');
             this.$stem          = this.$tip.find('.stem');
-            
+
             // Force options' setting even on widget's creation, eg: $foo.tip().tip({bar: 3}) <=> $foo.tip({bar: 3})
             this._setOptions(this.options);
-            
+
             //
             // Register some events
             //
-            
+
             // Open
             events = {};
             events[this.options.openOn.join(' ')] = 'open';
             this._bind(events);
-            
+
             // Close
             if (this.options.closeButton) {
                 this._bind(this.$closeButton, {'click': 'close'});
@@ -149,9 +149,9 @@
                 events[this.options.closeOn.join(' ')] = 'close';
                 this._bind(events);
             }
-            
+
             this.$tip.appendTo('body').hide();
-            
+
             //console.log('bindings', this.bindings);
         },
         _init: function () {
@@ -167,15 +167,15 @@
             var that = this,
                 $target,
                 content;
-            
+
             // Define the target from event (if defined) -- fallback to options
             $target = event && $(event && event.target) || this.options.target;
             //console.log('$target:', $target);
             if (!$target.length) {
                 return;
             }
-            
-            // 
+
+            //
             content = !$.isFunction(this.options.content) && this.options.content || this.options.content.call(this, function(response) {
                 // IE may instantly serve a cached response, need to give it a chance to finish with _open before
                 setTimeout(function () {
@@ -190,32 +190,32 @@
         _open: function (event, $target, content) {
             //console.log('_opening...', event, $target, content);
             var events;
-            
+
             if (!content || this.options.disabled) {
                 return;
             }
-            
+
             this._trigger("beforeOpen", event);
-            
+
             // Updating content
             if (this.$content.is(':empty') || content !== this.options.content) {
                 //console.log('updating content...');
                 this.$content.html(content);
             }
-            
+
             // Reveal the tip element
             this.$tip.show();
             // Position it according to its target
             this.reposition($target);
-            
+
             this._trigger("afterOpen", event);
         },
         close: function (event) {
             //console.log('closing...');
             this._trigger("beforeClose", event);
-            
+
             this.$tip.hide();
-            
+
             this._trigger("afterClose", event);
         },
         enable: function (event) {
@@ -249,11 +249,11 @@
             if (!$target) {
                 $target = this.options.target;
             }
-            
+
             my = longVersion[this.options.hook.tip];
             at = longVersion[this.options.hook.target];
             //console.log('my:', my, 'at:', at);
-            
+
             this.$tip.position({
                 of: $target,
                 my: my,
@@ -280,10 +280,10 @@
         },*/
         _setOption: function (k, v) {
             //console.log('_settingOption...', 'key=', k, 'value=', v);
-            
+
             var supportedStemClasses = ['tl', 'tc', 'tr', 'rt', 'rc', 'rb', 'br', 'bc', 'bl', 'lb', 'lc', 'lt'],
                 supportedHookPositions = supportedStemClasses.concat('cc');
-            
+
             switch (k) {
             case 'title':
                 //console.log('v', v);
@@ -306,6 +306,9 @@
             case 'content':
                 // Fallback 'content' to [title]
                 v = v || function () {return this.element.attr('title');}
+                if ( !$.isFunction( v ) ) {
+                    this.$content.html( v );
+                }
                 break;
             case 'target':
                 // Fallback 'target' to instance's element
@@ -316,7 +319,7 @@
                 v = v || {};
                 v.target = v.target && ($.inArray(v.target, supportedHookPositions) > -1) ? v.target : 'cc';
                 v.tip =  v.tip && ($.inArray(v.tip, supportedHookPositions) > -1) ? v.tip : 'cc';
-                
+
                 // Updating stem (if necessary)
                 if (this.options.stem) {
                     this.$tip.removeClass(supportedStemClasses.join(' ')).addClass(v.tip);
@@ -344,7 +347,7 @@
             }
             //console.log('_settedOption', 'key=', k, 'value=', v);
             $.Widget.prototype._setOption.apply(this, arguments);
-            
+
             return this;
         },
         _tip: function () {
