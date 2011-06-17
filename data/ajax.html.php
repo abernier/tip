@@ -4,13 +4,10 @@ header('text/html');
 ?>
 
 <h1>Dynamic <samp>content</samp></h1>
-<p>A function can also be set as <samp>content</samp> in order for example fetching content from server, eg:</p>
+<p>A <a href="http://api.jquery.com/category/deferred-object/">Deffered object</a> can also be set as <samp>content</samp> in order for example fetching content from server, eg:</p>
 <pre style="text-align:left;"><code>
 $('#foo').tip({
-    content: <strong>function</strong> (response) {
-        $.get('data/ajax.html', response);
-        return 'loading...';
-    }
+    content: <strong>$.get</strong>('data/ajax.html')
 });
 </code></pre>
 

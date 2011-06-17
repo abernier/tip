@@ -27,46 +27,35 @@
         <script src="vendor/jquery.min.js"></script>
         <script src="vendor/jquery-ui.min.js"></script>
         <script src="vendor/jquery.tmpl.min.js"></script>
+        <script src="feel/widget.js"></script>
         <script src="feel/index.js"></script>
         <script>
         $('#foo').tip().one('tipafterclose', function (event) {
             $(this).tip({
-                content: '<h1><samp>content</samp></h1><p>Even if my default is to display my <samp>title</samp> attribute, I can also display custom <abbr title="Hyper Text Markup Language">HTML</abbr> content, eg:</p><pre style="text-align:left; white-space:normal;"><code>$(\'#foo\').tip({<strong>content</strong>: \'&lt;h1&gt;&lt;samp&gt;content&lt;/samp&gt;&lt;/h1&gt;&lt;p&gt;Even if my default is to display my &lt;samp&gt;title&lt;/samp&gt; attribute, I can also display custom &lt;abbr title=&quot;Hyper Text Markup Language&quot;&gt;HTML&lt;/abbr&gt; content, eg:&lt;/p&gt;\'})</code></pre><p class="clue">Close-me to continue...</p>'
-            }).one('tipafterclose', function (event) {
+                content:'<h1><samp>content</samp></h1><p>Even if my default is to display my <samp>title</samp> attribute, I can also display custom <abbr title="Hyper Text Markup Language">HTML</abbr> content, eg:</p><pre style="text-align:left; white-space:normal;"><code>$(\'#foo\').tip({<strong>content</strong>: \'&lt;h1&gt;&lt;samp&gt;content&lt;/samp&gt;&lt;/h1&gt;&lt;p&gt;Even if my default is to display my &lt;samp&gt;title&lt;/samp&gt; attribute, I can also display custom &lt;abbr title=&quot;Hyper Text Markup Language&quot;&gt;HTML&lt;/abbr&gt; content, eg:&lt;/p&gt;\'})</code></pre><p class="clue">Close-me to continue...</p>'
+            }).tip('open').one('tipafterclose', function (event) {
                 $(this).tip({
-                    content: function (response) {
-                        $.get('data/ajax.html.php', response);
-                        return 'loading...';
-                    }
-                }).one('tipafterclose', function (event) {
+                    content: $.get('data/ajax.html')
+                }).tip('open').one('tipafterclose', function (event) {
                     $(this).tip({
-                        content: function (response) {
-                            $.get('data/target.html.php', response);
-                            return 'loading...';
-                        },
+                        content: $.get('data/target.html.php'),
                         target: $('#bar')
-                    }).one('tipafterclose', function (event) {
+                    }).tip('open').one('tipafterclose', function (event) {
                         $(this).tip({
-                            content: function (response) {
-                                $.get('data/hook.html.php', response);
-                                return 'loading...';
-                            },
+                            content: $.get('data/hook.html.php'),
                             hook: {
                                 target: 'bc',
                                 tip: 'tc'
                             },
                             stem: true
-                        }).one('tipafterclose', function (event) {
+                        }).tip('open').one('tipafterclose', function (event) {
                             $(this).tip({
-                                content: function (response) {
-                                    $.get('data/hook2.html.php', response);
-                                    return 'loading...';
-                                },
+                                content: $.get('data/hook2.html.php'),
                                 hook: {
                                     target: 'lc',
                                     tip: 'rc'
                                 }
-                            });
+                            }).tip('open');
                         });
                     });
                 });

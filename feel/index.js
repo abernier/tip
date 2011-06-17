@@ -7,6 +7,7 @@
     // @depends     jquery.js
     // @depends     jquery.ui.core.js
     // @depends     jquery.ui.widget.js
+    // @depends     jquery.ui.abernier.widget.js
     // @depends     jquery.tmpl.js
     // @copyright   © 2011 Iscool Entertainment
     // @author      Antoine BERNIER (abernier)
@@ -29,7 +30,7 @@
     //
     //                          <content>: The content for the tip.
     //
-    //                              '<html content>' | function (response) {}
+    //                              '<html content>' | Deferred
     //
     //                              Default: $el.attr('title')
     //
@@ -86,11 +87,11 @@
     //
     //                              Default: ''
     //
-    $.widget("ui.tip", {
+    $.widget('abernier.tip', $.abernier.widget, {
         // default options
         options: {
             disabled: false,
-            title: '',
+            //title: '',
             closeButton: true,
             content: null,
             target: null,
@@ -113,9 +114,9 @@
         _create: function () {
             //console.log('_creating...', 'this.options=', this.options);
             
-            var events;
+            $.Widget.prototype._create.apply(this, arguments);
             
-            this.bindings = $();
+            var events;
             
             //
             // Create the tip's markup
@@ -144,27 +145,29 @@
             this._bind(events);
             
             // Close
-            if (this.options.closeButton) {
-                this._bind(this.$closeButton, {'click': 'close'});
+            events = {};
+            if (this.options.closeOn.length < 1) {
+                // Auto-close if none 'closeOn' option given (and if there is a close button)
+                if (this.options.closeButton) {
+                    this._bind(this.$closeButton, {'click': 'close'});
+                }
             } else {
-                events = {};
-                $.each(this.options.openOn, function (event, index) {
+                $.each(this.options.closeOn, function (event, index) {
                     events[event] = 'close';
                 });
-                this._bind(events);
             }
+            this._bind(events);
             
+            // Inject the $tip to the DOM
             this.$tip.appendTo('body').hide();
             
-            //console.log('bindings', this.bindings);
-        },
-        _init: function () {
-            //console.log('_initing...', 'this.options=', this.options);
-
-            // If no event is set to open the tip: just show it!
+            // Auto-open if none 'openOn' option
             if (this.options.openOn.length < 1) {
                 this.open();
             }
+        },
+        _init: function () {
+            //console.log('_initing...', 'this.options=', this.options);
         },
         open: function (event) {
             //console.log('opening...', event);
@@ -174,48 +177,28 @@
             
             // Define the target from event (if defined) -- fallback to options
             $target = event && $(event && event.target) || this.options.target;
-            //console.log('$target:', $target);
             if (!$target.length) {
-                return;
-            }
-            
-            // 
-            content = !$.isFunction(this.options.content) && this.options.content || this.options.content.call(this, function(response) {
-                // IE may instantly serve a cached response, need to give it a chance to finish with _open before
-                setTimeout(function () {
-                    that._open(event, $target, response);
-                }, 13);
-            });
-            //console.log('content', content);
-            if (content) {
-                this._open(event, $target, content);
-            }
-        },
-        _open: function (event, $target, content) {
-            //console.log('_opening...', event, $target, content);
-            var events;
-            
-            if (!content || this.options.disabled) {
                 return;
             }
             
             this._trigger("beforeOpen", event);
             
-            // Updating content
-            if (this.$content.is(':empty') || content !== this.options.content) {
-                //console.log('updating content...');
-                this.$content.html(content);
-            }
+            //
+            // When deferred content is done, show it
+            //
             
-            // Reveal the tip element
-            this.$tip.show();
-            // Position it according to its target
-            this.reposition($target);
+            $.when(this.options.content).done(function(content) {
+                that.$content.html(content);
+                // Reveal the tip element
+                that.$tip.show();
+                // Position it according to its target
+                that.reposition($target);
+            });
             
             this._trigger("afterOpen", event);
         },
         close: function (event) {
-            //console.log('closing...');
+            console.log('closing...');
             this._trigger("beforeClose", event);
             
             this.$tip.hide();
@@ -289,14 +272,14 @@
                 supportedHookPositions = supportedStemClasses.concat('cc');
             
             switch (k) {
-            case 'title':
+            /*case 'title':
                 //console.log('v', v);
                 v = v || '';
                 if (v) {
                     //console.log('toto', v);
                     this.$title.text(v);
                 }
-                break;
+                break;*/
             case 'closeButton':
                 // Normalize to boolean value
                 v = v ? true : false;
@@ -309,7 +292,7 @@
                 break;
             case 'content':
                 // Fallback 'content' to [title]
-                v = v || function () {return this.element.attr('title');}
+                v = v || this.element.attr('title');
                 break;
             case 'target':
                 // Fallback 'target' to instance's element
@@ -364,33 +347,8 @@
                 '</div>');
         },
         destroy: function () {
-            this.bindings.unbind("." + this.widgetName);
-            this.$tip.remove();
-            // TODO
             $.Widget.prototype.destroy.apply(this, arguments);
-        },
-        _bind: function (element, handlers) {
-            // no element argument, shuffle and use this.element
-            if (!handlers) {
-                handlers = element;
-                element = this.element;
-            } else {
-                // accept selectors, DOM elements
-                element = $(element);
-                this.bindings = this.bindings.add(element);
-            }
-            var instance = this;
-            $.each(handlers, function(event, handler) {
-                element.bind(event + "." + instance.widgetName, function () {
-                    // allow widgets to customize the disabled handling
-                    // - disabled as an array instead of boolean
-                    // - disabled class as method for disabling individual parts
-                    if (instance.options.disabled === true || $(this).hasClass("ui-state-disabled")) {
-                        return;
-                    }
-                    return (typeof handler === "string" ? instance[handler] : handler).apply(instance, arguments);
-                });
-            });
+            this.$tip.remove();
         }
     });
 }(jQuery));
