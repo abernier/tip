@@ -138,7 +138,9 @@
             
             // Open
             events = {};
-            events[this.options.openOn.join(' ')] = 'open';
+            $.each(this.options.openOn, function (event, index) {
+                events[event] = 'open';
+            });
             this._bind(events);
             
             // Close
@@ -146,7 +148,9 @@
                 this._bind(this.$closeButton, {'click': 'close'});
             } else {
                 events = {};
-                events[this.options.closeOn.join(' ')] = 'close';
+                $.each(this.options.openOn, function (event, index) {
+                    events[event] = 'close';
+                });
                 this._bind(events);
             }
             
@@ -360,6 +364,8 @@
                 '</div>');
         },
         destroy: function () {
+            this.bindings.unbind("." + this.widgetName);
+            this.$tip.remove();
             // TODO
             $.Widget.prototype.destroy.apply(this, arguments);
         },
