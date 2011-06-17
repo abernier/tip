@@ -7,6 +7,13 @@ $.widget('abernier.widget', {
         this.bindings = $();
         $.Widget.prototype._createWidget.apply(this, arguments);
     },
+    _getCreateOptions: function () {
+        //
+        // Grab the options from element's classes before applying default options
+        //
+
+        return {};
+    },
     destroy: function () {
         this.bindings.unbind("." + this.widgetName);
         $.Widget.prototype.destroy.apply(this, arguments);

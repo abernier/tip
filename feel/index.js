@@ -16,7 +16,7 @@
         // default options
         options: {
             disabled: false,
-            //title: '',
+            title: '',
             closeButton: true,
             content: null,
             target: null,
@@ -28,13 +28,6 @@
             openOn: null,
             closeOn: null,
             addClass: ''
-        },
-        _getCreateOptions: function () {
-            //
-            // Grab the options from element's classes before applying default options
-            //
-
-            return {};
         },
         _create: function () {
             //console.log('_creating...', 'this.options=', this.options);
@@ -175,21 +168,6 @@
                 collision: 'none none'
             });
         },
-        /*_searchForLastClassAmong: function ($el, classNames) {
-            //
-            // Return the last class in classNames
-            //
-
-            var ret;
-
-            $.each($.trim($el.attr('class')).split(/\s+/), function (i, className) {
-                if ($.inArray(className, classNames) > -1) {
-                    ret = className;
-                }
-            });
-
-            return ret || false;
-        },*/
         _setOption: function (k, v) {
             //console.log('_settingOption...', 'key=', k, 'value=', v);
             
@@ -197,14 +175,12 @@
                 supportedHookPositions = supportedStemClasses.concat('cc');
             
             switch (k) {
-            /*case 'title':
-                //console.log('v', v);
+            case 'title':
                 v = v || '';
                 if (v) {
-                    //console.log('toto', v);
                     this.$title.text(v);
                 }
-                break;*/
+                break;
             case 'closeButton':
                 // Normalize to boolean value
                 v = v ? true : false;
