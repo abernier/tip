@@ -137,9 +137,13 @@
             //
 
             // Open
-            events = {};
-            events[this.options.openOn.join(' ')] = 'open';
-            this._bind(events);
+            if ( !this.options.openOn ) {
+                events = {};
+                events[ this.options.openOn.join( ' ' ) ] = 'open';
+                this._bind( events );
+            }
+
+
 
             // Close
             if (this.options.closeButton) {
@@ -306,9 +310,6 @@
             case 'content':
                 // Fallback 'content' to [title]
                 v = v || function () {return this.element.attr('title');}
-                if ( !$.isFunction( v ) ) {
-                    this.$content.html( v );
-                }
                 break;
             case 'target':
                 // Fallback 'target' to instance's element
@@ -363,7 +364,7 @@
                 '</div>');
         },
         destroy: function () {
-            // TODO
+            this.$tip.remove();
             $.Widget.prototype.destroy.apply(this, arguments);
         },
         _bind: function (element, handlers) {
