@@ -9,14 +9,14 @@
         html {display:table; width:100%;}
         body {display:table-cell; text-align:center; vertical-align:middle;}
         body {font-size:16px;/* font-family:"Arial Black";*/ background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAAA3NCSVQICAjb4U/gAAAABlBMVEX////MzMw46qqDAAAACXBIWXMAAAsSAAALEgHS3X78AAAAIXRFWHRTb2Z0d2FyZQBNYWNyb21lZGlhIEZpcmV3b3JrcyAzLjDvaTHwAAAAFnRFWHRDcmVhdGlvbiBUaW1lADEwLzIyLzA0BdO4DAAAAA9JREFUeJxj+MAAgfwQCAAuAAP9krVt7wAAAABJRU5ErkJggg==);}
-        
+
         /******************/
-        
+
         h1 {display:inline-block; position:relative;}
-        
+
         #foo {position:absolute; top:200px; left:300px;}
         #bar {position:absolute; top:300px; left:600px;}
-        
+
         .tip strong {background-color:yellow; color:#333; border-radius:.25em; padding:.1em .2em;}
         .tip .clue {font-style:italic;}
         </style>
@@ -27,7 +27,7 @@
         <script src="vendor/jquery.min.js"></script>
         <script src="vendor/jquery-ui.min.js"></script>
         <script src="vendor/jquery.tmpl.min.js"></script>
-        <script src="feel/index.js"></script>
+        <script src="feel/jquery.ui.tip.js"></script>
         <script>
         $('#foo').tip().one('tipafterclose', function (event) {
             $(this).tip({
