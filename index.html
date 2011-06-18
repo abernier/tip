@@ -55,7 +55,13 @@
                                     target: 'lc',
                                     tip: 'rc'
                                 }
-                            }).tip('open');
+                            }).tip('open').one('tipafterclose', function (event) {
+                                $(this).tip({
+                                    content: $.get('data/hook2.html.php'),
+                                    closeButton: false,
+                                    closeOn: ['mouseleave']
+                                }).tip('open');
+                            });
                         });
                     });
                 });

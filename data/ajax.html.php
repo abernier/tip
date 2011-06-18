@@ -1,5 +1,5 @@
 <?php
-sleep(1);
+sleep(4);
 header('text/html');
 ?>
 
