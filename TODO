@@ -4,3 +4,5 @@
  - repositionner au changement de 'hook' ou 'stem'
  - ecraser/merger? les options d'openOn et closeOn à leur changement
  - animations CSS3
+ - ne pas permettre d'ouvrir une tip déjà ouverte (->disabled?)
+ - un offset?
