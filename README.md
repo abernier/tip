@@ -1,11 +1,23 @@
-# Installation
+# Build
 
 `make` will generate:
 
 1. `dist/jquery.ui.tip[.min].js`
 2. `dist/jquery.ui.tip.css`
 
-# Usage
+# Load
+
+1. The stylesheet:
+
+ `<link rel="stylesheet" href="jquery.ui.tip.css" />`
+
+2. The widget:
+
+ `<script src="jquery.ui.tip.js"></script>`
+
+ which has the following dependencies: [jquery](https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js), [jquery-ui](https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js), [jquery-tmpl](http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js)
+
+# Use
 
     $el.tip([<options>])
     
