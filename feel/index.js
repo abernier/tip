@@ -43,9 +43,9 @@
             this.$tip = this._tip();
             
             // Cache some remarkable elements
-            this.$title         = this.$tip.find('.hd');
+            this.$head         = this.$tip.find('.hd');
             this.$closeButton   = this.$tip.find('.close-button');
-            this.$content       = this.$tip.find('.bd');
+            this.$body       = this.$tip.find('.bd');
             this.$stem          = this.$tip.find('.stem');
             
             // Force options' setting even on widget's creation, eg: $foo.tip().tip({bar: 3}) <=> $foo.tip({bar: 3})
@@ -101,8 +101,8 @@
             
             this._trigger("beforeOpen", event);
             
-            contentBackup = this.$content.clone(true, true);
-            this.$content.empty();
+            bodyBackup = this.$body.clone(true, true);
+            this.$body.empty();
             // Reveal the tip element
             this.$tip.show();
             this.reposition($target);
@@ -113,12 +113,12 @@
             
             $.when(this.options.content).then(
                 function (content) {
-                    that.$content.html(content);
+                    that.$body.html(content);
                     // Position it according to its target
                     that.reposition($target);
                 },
                 function () {
-                    that.$content.html(contentBackup);
+                    that.$body.html(bodyBackup);
                     // Position it according to its target
                     that.reposition($target);
                 }
@@ -189,7 +189,7 @@
             case 'title':
                 v = v || '';
                 if (v) {
-                    this.$title.text(v);
+                    this.$head.text(v);
                 }
                 break;
             case 'closeButton':

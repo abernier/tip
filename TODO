@@ -1,6 +1,6 @@
- - distinguer this.$content de this.options.content, par $body
  - chaine de chargement ("loading...") ou spinner (CSS/text?)?
  - au chargement du contenu, si close = annuler?
+ - une classe/message d'erreur?
  - repositionner au changement de 'hook' ou 'stem'
  - ecraser/merger? les options d'openOn et closeOn à leur changement
  - animations CSS3
