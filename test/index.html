@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>QUnit Test Suite</title>
+    <link rel="stylesheet" href="qunit/qunit/qunit.css">
+    <link rel="stylesheet" href="../look/index.css">
+    <style>
+    body {font-size:16px;/* font-family:"Arial Black";*/ background:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAAA3NCSVQICAjb4U/gAAAABlBMVEX////MzMw46qqDAAAACXBIWXMAAAsSAAALEgHS3X78AAAAIXRFWHRTb2Z0d2FyZQBNYWNyb21lZGlhIEZpcmV3b3JrcyAzLjDvaTHwAAAAFnRFWHRDcmVhdGlvbiBUaW1lADEwLzIyLzA0BdO4DAAAAA9JREFUeJxj+MAAgfwQCAAuAAP9krVt7wAAAABJRU5ErkJggg==);}
+    
+    /******************/
+    
+    #foo {position:absolute; top:200px; left:300px;}
+    #bar {position:absolute; top:300px; left:600px;}
+    
+    .tip strong {background-color:yellow; color:#333; border-radius:.25em; padding:.1em .2em;}
+    .tip .clue {font-style:italic;}
+    </style>
+    <script src="qunit/qunit/qunit.js"></script>
+    <!-- Your project file goes here -->
+    <script src="../vendor/jquery.min.js"></script>
+    <script src="../vendor/jquery-ui.min.js"></script>
+    <script src="../vendor/jquery.tmpl.min.js"></script>
+    <script src="../feel/widget.js"></script>
+    <script src="../feel/index.js"></script>
+    <!-- Your tests file goes here -->
+    <script>
+    test("Instanciation / Destruction", function () {
+        var instance;
+
+        instance = $('#foo').tip();
+        ok($('.tip').length === 1, "there is a tip in the DOM");
+        
+        instance.tip('destroy');
+        ok($('.tip').length === 0, "there is no more tip in the DOM");
+    });
+    </script>
+</head>
+<body>
+    <h1 id="qunit-header">QUnit Test Suite</h1>
+    <h2 id="qunit-banner"></h2>
+    <div id="qunit-testrunner-toolbar"></div>
+    <h2 id="qunit-userAgent"></h2>
+    <ol id="qunit-tests"></ol>
+    <h1 id="foo" title="Hi, I'm .tip()! Close-me to continue...">foo</h1>
+    <h1 id="bar">bar</h1>
+</body>
+</html>
