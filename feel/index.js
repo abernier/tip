@@ -91,7 +91,7 @@
             //console.log('opening...', event);
             var that = this,
                 $target,
-                contentBackup;
+                bodyBackup;
             
             // Define the target from event (if defined) -- fallback to options
             $target = event && $(event && event.target) || this.options.target;
@@ -101,22 +101,26 @@
             
             this._trigger("beforeOpen", event);
             
+            // Cut the $body
             bodyBackup = this.$body.clone(true, true);
             this.$body.empty();
+            
             // Reveal the tip element
             this.$tip.show();
             this.reposition($target);
             
             //
-            // When deferred content is done, show it
+            // Update $body
             //
             
             $.when(this.options.content).then(
+                // Success
                 function (content) {
                     that.$body.html(content);
                     // Position it according to its target
                     that.reposition($target);
                 },
+                // Failure
                 function () {
                     that.$body.html(bodyBackup);
                     // Position it according to its target
