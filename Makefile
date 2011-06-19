@@ -6,7 +6,6 @@ CSS_DIST = ${DIST_DIR}
 PACKAGE = jquery.ui.tip
 
 MODULES = \
-	widget.js \
 	index.js
 
 CSS = \

@@ -23,7 +23,12 @@ jQuery(document).ready(function ($) {
         instance.tip({content: newContent});
         equal($body.html(), newContent, "Content was updated");
         
+        
+        
         $closeButton.trigger('click');
         ok(!$tip.is(':visible'), 'After clicked on the close-button, tip is closed');
+        
+        instance.tip('destroy');
+        ok($('.tip').length === 0, "Our tip was removed from DOM")
     });
 });
