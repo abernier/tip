@@ -78,20 +78,25 @@
             
             // Inject the $tip to the DOM
             this.$tip.appendTo('body').hide();
+        },
+        _init: function () {
+            //console.log('_initing...', 'this.options=', this.options);
             
             // Auto-open if none 'openOn' option
             if (this.options.openOn.length < 1) {
                 this.open();
             }
         },
-        _init: function () {
-            //console.log('_initing...', 'this.options=', this.options);
-        },
         open: function (event) {
             //console.log('opening...', event);
             var that = this,
                 $target,
                 bodyBackup;
+            
+            // Does not open if already visible
+            /*if (this.$tip.is(':visible')) {
+                return;
+            }*/
             
             // Define the target from event (if defined) -- fallback to options
             $target = event && $(event && event.target) || this.options.target;
@@ -261,6 +266,9 @@
                     '</div>' +
                     '<span class="stem"></span>' +
                 '</div>');
+        },
+        widget: function () {
+            return this.$tip;
         },
         destroy: function () {
             $.Widget.prototype.destroy.apply(this, arguments);
