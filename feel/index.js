@@ -82,11 +82,6 @@
             // Inject the $widget to the DOM
             this.$widget.appendTo('body').hide();
             
-            // Auto-open if none 'openOn' option
-            if (this.options.openOn.length < 1) {
-                this.open();
-            }
-            
             //
             // Listen for options changes that associated elements require an immediate update
             //
@@ -124,6 +119,12 @@
                     break;
                 }
             }, this));
+            
+            // Auto-open if none 'openOn' option
+            if (this.options.openOn.length < 1) {
+                this.open();
+                this._setOptions(this.options);
+            }
         },
         _init: function () {
             //console.log('_initing...', 'this.options=', this.options);
@@ -153,7 +154,7 @@
             // Reveal the tip element
             this.$widget.show();
             
-            this._updateBody(event);
+            //this._updateBody(event);
             
             this._trigger("afterOpen", event);
         },
@@ -247,6 +248,7 @@
             }
         },
         _updateStem: function () {
+            //console.log('updating stem', this.options.stem);
             this.$widget.removeClass(this.supportedStemClasses.join(' '));
             if (this.options.stem && this.options.hook && this.options.hook.tip) {
                 this.$widget.addClass(this.options.hook.tip);
