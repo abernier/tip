@@ -86,7 +86,7 @@
             // Listen for options changes that associated elements require an immediate update
             //
             
-            this.element.bind('tipsetoption', $.proxy(function (event, data) {
+            this.element.bind('tipsetoption.tip', $.proxy(function (event, data) {
                 //console.log("option '%s' has just changed from '%s' to '%s'", data.option, data.original, data.current);
                 
                 // Does not update elements if closed
@@ -153,8 +153,6 @@
             
             // Reveal the tip element
             this.$widget.show();
-            
-            //this._updateBody(event);
             
             this._trigger("afterOpen", event);
         },
@@ -317,7 +315,7 @@
             //
             // Publish option changes (PubSub pattern)
             //
-            this.element.trigger("tipsetoption", {
+            this._trigger("setoption", null, {
                 option: k,
                 original: oldValue,
                 current: v
